@@ -1,0 +1,86 @@
+<!--
+@license
+Copyright (c) 2015 The AerCloud Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://aercloud.github.io/LICENSE.txt
+The complete set of authors may be found at http://aercloud.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://aercloud.github.io/CONTRIBUTORS.txt
+Code distributed by Aeris as part of the aercloud project is also
+subject to an additional IP rights grant found at http://aercloud.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../aae-aercloud-behaviors/aae-aercloud-config-behavior.html">
+
+<!--
+An element for managing the fleet resource.
+
+Example:
+
+    <aae-fleet-admin></aae-fleet-admin>
+
+@demo demo/index.html
+-->
+
+<dom-module id="aae-fleet-admin">
+  <template>
+    <label>Fleet ID: {{account}}</label>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'aae-fleet-admin',
+
+      behaviors: [AppExpress.AerCloudConfig],
+
+      properties: {
+
+      },
+
+      // Element Lifecycle
+
+      ready: function() {
+        // `ready` is called after all elements have been configured, but
+        // propagates bottom-up. This element's children are ready, but parents
+        // are not.
+        //
+        // This is the point where you should make modifications to the DOM (when
+        // necessary), or kick off any processes the element wants to perform.
+      },
+
+      attached: function() {
+        // `attached` fires once the element and its parents have been inserted
+        // into a document.
+        //
+        // This is a good place to perform any work related to your element's
+        // visual state or active behavior (measuring sizes, beginning animations,
+        // loading resources, etc).
+        this.refresh();
+      },
+
+      detached: function() {
+        // The analog to `attached`, `detached` fires when the element has been
+        // removed from a document.
+        //
+        // Use this to clean up anything you did in `attached`.
+      },
+
+      // Element Behavior
+      refresh: function() {
+        console.log("account=" + this.account);
+        console.log("apiKey=" + this.apiKey);
+        console.log("container=" + this.container);
+
+        var validated = false;
+        validated = this.account !== undefined && this.account.trim() !== "";
+        validated = this.apiKey !== undefined && this.apiKey.trim() !== "";
+        validated = this.container !== undefined && this.container.trim() !== "";
+        console.log("validated=" + validated);
+
+        if (validated) {
+          // call aercloud
+        }
+      }
+
+    });
+  </script>
+</dom-module>

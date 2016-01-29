@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The AerCloud Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://aercloud.github.io/LICENSE.txt
+The complete set of authors may be found at http://aercloud.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://aercloud.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the aercloud project is also
+subject to an additional IP rights grant found at http://aercloud.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>aae-fleet-admin Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../../iron-input/iron-input.html">
+    <link rel="import" href="../../paper-button/paper-button.html"> 
+    <link rel="import" href="../aae-fleet-admin.html">
+  </head>
+  <body unresolved>
+    Demo<p>
+
+    <template is="dom-bind" id="demo">
+      <label>Account:&nbsp;</label><input is="iron-input" bind-value="{{account}}" placeholder="Enter account id..."><p>
+      <label>API Key:&nbsp;</label><input is="iron-input" bind-value="{{apiKey}}" placeholder="Enter api key..."><p>
+      <label>Container:&nbsp;</label><input is="iron-input" bind-value="{{container}}" placeholder="Enter container id..."><p>
+      <paper-button raised=true on-click="refreshFleet">Refresh Fleet</paper-button>
+      <hr>
+      <div>
+        <aae-fleet-admin account="{{account}}" api-key="{{apiKey}}" container="{{container}}"
+          id="fleet-admin">
+        </aae-fleet-admin>
+      </div>
+
+    </template>
+    <script>
+    function refreshFleet(e) {
+      var t = e.target;
+      if (t.localName === 'paper-button') {
+        if (t.hasAttribute('disabled')) {
+          console.error('should not be able to click disabled button', t);
+        } else {
+          console.log('click', t);
+          var fleetAdmin = document.querySelector('#fleet-admin');
+          fleetAdmin.refresh();
+        }
+      }
+    };
+
+    // addEventListener('template-bound', function(e) {
+    //   console.log("received template-bound event");
+    //   e.target.createElement = createElement;
+    // });
+
+    var template = document.querySelector('#demo');
+    template.refreshFleet = refreshFleet;
+
+    </script>
+
+  </body>
+</html>
