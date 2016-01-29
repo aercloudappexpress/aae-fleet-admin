@@ -23,6 +23,9 @@ Example:
 
 <dom-module id="aae-fleet-admin">
   <template>
+    <iron-ajax id="ajax" auto=false contentType="application/json" handle-as="json"
+      on-response="handleResponse"
+      debounce-duration="300"></iron-ajax>
     <label>Fleet ID: {{account}}</label>
   </template>
 
@@ -77,8 +80,12 @@ Example:
         console.log("validated=" + validated);
 
         if (validated) {
-          // call aercloud
+          this.$.ajax.url = this.endpoint + "/" + this.account + "/";
         }
+      },
+
+      handleResponse: function() {
+
       }
 
     });

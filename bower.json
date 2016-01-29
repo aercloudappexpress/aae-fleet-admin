@@ -23,8 +23,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
-    "aae-base": "aercloudappexpress/aae-base#^0.1.0",
-    "aae-aercloud-behaviors": "aercloudappexpress/aae-aercloud-behaviors#^0.1.0"
+    "aae-aercloud-behaviors": "https://github.com/aercloudappexpress/aae-aercloud-behaviors.git#master"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
