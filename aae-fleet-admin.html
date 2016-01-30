@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://aercloud.github.io/PATE
 <link rel="import" href="../aae-aercloud-behaviors/aae-aercloud-config-behavior.html">
 
 <!--
-An element for managing the fleet resource.
+An element for displaying fleet summaries.
 
 Example:
 
@@ -22,9 +22,11 @@ Example:
 
 @demo demo/index.html
 -->
-
 <dom-module id="aae-fleet-admin">
   <style>
+    :host {
+
+    }
     .container {
       @apply(--layout-horizontal);
       @apply(--layout-wrap);
@@ -67,36 +69,36 @@ Example:
       on-error="handlePlaceError"
       debounce-duration="300"></iron-ajax>      
 
-    <label>ID: [[fleetSummary.id]]</label></p>
-    <label>Name: [[fleetSummary.name]]</label></p>
+    <label>ID: [[_fleetSummary.id]]</label></p>
+    <label>Name: [[_fleetSummary.name]]</label></p>
 
     <div class="container">
       <paper-card heading="Devices">
-        <div class="card-content">[[deviceSummary.count]]</div>
+        <div class="card-content">[[_deviceSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Devices</paper-button>
         </div>
       </paper-card>
       <paper-card heading="Vehicles">
-        <div class="card-content">[[vehicleSummary.count]]</div>
+        <div class="card-content">[[_vehicleSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Vehicles</paper-button>
         </div>
       </paper-card>
       <paper-card heading="Drivers">
-        <div class="card-content">[[driverSummary.count]]</div>
+        <div class="card-content">[[_driverSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Drivers</paper-button>
         </div>
       </paper-card>
       <paper-card heading="Stations">
-        <div class="card-content">[[stationSummary.count]]</div>
+        <div class="card-content">[[_stationSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Stations</paper-button>
         </div>
       </paper-card>
       <paper-card heading="Places">
-        <div class="card-content">[[placeSummary.count]]</div>
+        <div class="card-content">[[_placeSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Places</paper-button>
         </div>
@@ -112,10 +114,50 @@ Example:
 
       behaviors: [AppExpress.AerCloudConfig],
 
-      /**
-       * Public properties
-       */
       properties: {
+        _fleetSummary: {
+          type: Object,
+          value: function() { return {
+              "id": "",
+              "name": ""
+            };
+          }
+        },
+
+        _deviceSummary: {
+          type: Object,
+          value: function() {
+            return { "count": 0 }
+          }
+        },
+
+        _vehicleSummary: {
+          type: Object,
+          value: function() {
+            return { "count": 0 }
+          }
+        },
+
+        _driverSummary: {
+          type: Object,
+          value: function() {
+            return { "count": 0 }
+          }
+        },
+
+        _stationSummary: {
+          type: Object,
+          value: function() {
+            return { "count": 0 }
+          }
+        },
+
+        _placeSummary: {
+          type: Object,
+          value: function() {
+            return { "count": 0 }
+          }
+        }                
       },
 
       // Element Lifecycle
@@ -129,33 +171,10 @@ Example:
         // necessary), or kick off any processes the element wants to perform.
         console.log('ready');
 
-        // ------ semi-private properties in this element --------
-
-        this.setFleetSummary({
+        this._setFleetSummary({
           "id": this.account,
           "name": ""          
         });
-
-        this.setDeviceSummary({
-          "count": 0
-        });
-
-        this.setVehicleSummary({
-          "count": 0
-        });
-
-        this.setDriverSummary({
-          "count": 0
-        });
-
-        this.setStationSummary({
-          "count": 0
-        }); 
-
-        this.setPlaceSummary({
-          "count": 0
-        });              
-        // ------ end of semi-private properties
       },
 
       attached: function() {
@@ -176,30 +195,34 @@ Example:
       },
 
       // Element Behavior
-      setFleetSummary: function(newSummary) {
-        this.set('fleetSummary', newSummary);
+
+      _setFleetSummary: function(newSummary) {
+        this.set('_fleetSummary', newSummary);
       },
 
-      setDeviceSummary: function(newSummary) {
-        this.set('deviceSummary', newSummary);
+      _setDeviceSummary: function(newSummary) {
+        this.set('_deviceSummary', newSummary);
       },
 
-      setVehicleSummary: function(newSummary) {
-        this.set('vehicleSummary', newSummary);
+      _setVehicleSummary: function(newSummary) {
+        this.set('_vehicleSummary', newSummary);
       },
 
-      setDriverSummary: function(newSummary) {
-        this.set('driverSummary', newSummary);
+      _setDriverSummary: function(newSummary) {
+        this.set('_driverSummary', newSummary);
       },     
 
-      setStationSummary: function(newSummary) {
-        this.set('stationSummary', newSummary);
+      _setStationSummary: function(newSummary) {
+        this.set('_stationSummary', newSummary);
       },
 
-      setPlaceSummary: function(newSummary) {
-        this.set('placeSummary', newSummary);
+      _setPlaceSummary: function(newSummary) {
+        this.set('_placeSummary', newSummary);
       },      
 
+      /**
+       * Refresh the element content when account and apiKey change.
+       */
       refresh: function() {
         console.log("account=" + this.account);
         console.log("apiKey=" + this.apiKey);
@@ -208,15 +231,14 @@ Example:
         var validated = false;
         validated = this.account !== undefined && this.account.trim() !== "";
         validated = this.apiKey !== undefined && this.apiKey.trim() !== "";
-        validated = this.container !== undefined && this.container.trim() !== "";
         console.log("validated=" + validated);
 
         if (validated) {
-          this.updateFleetSummary();
+          this._updateFleetSummary();
         }
       },
 
-      updateFleetSummary: function() {
+      _updateFleetSummary: function() {
         console.log("Updating fleet summary");
 
         var ajax = this.$.fleetAjax;
@@ -230,7 +252,7 @@ Example:
         console.log(req.response);
 
         // TODO add name
-        this.setFleetSummary({
+        this._setFleetSummary({
             "id": this.account
         });
 
@@ -249,7 +271,7 @@ Example:
         console.log("Device request successful");
         console.log(req.response);
 
-        this.setDeviceSummary({"count": req.response.ids.length});
+        this._setDeviceSummary({"count": req.response.ids.length});
 
         // Call AerCloud to update vehicle summary
         var ajax = this.$.vehicleAjax;
@@ -266,7 +288,7 @@ Example:
         console.log("Vehicle request successful");
         console.log(req.response);
 
-        this.setVehicleSummary({"count": req.response.ids.length});
+        this._setVehicleSummary({"count": req.response.ids.length});
 
         // Call AerCloud to update driver summary
         var ajax = this.$.driverAjax;
@@ -283,7 +305,7 @@ Example:
         console.log("Driver request successful");
         console.log(req.response);
 
-        this.setDriverSummary({"count": req.response.ids.length});
+        this._setDriverSummary({"count": req.response.ids.length});
 
         // Call AerCloud to update station summary
         var ajax = this.$.stationAjax;
@@ -300,7 +322,7 @@ Example:
         console.log("Station request successful");
         console.log(req.response);
 
-        this.setStationSummary({"count": req.response.ids.length});
+        this._setStationSummary({"count": req.response.ids.length});
 
         // Call AerCloud to update place summary
         var ajax = this.$.placeAjax;
@@ -317,7 +339,7 @@ Example:
         console.log("Place request successful");
         console.log(req.response);
 
-        this.setPlaceSummary({"count": req.response.ids.length});
+        this._setPlaceSummary({"count": req.response.ids.length});
 
       },
 

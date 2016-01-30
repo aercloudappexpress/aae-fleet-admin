@@ -25,8 +25,7 @@ subject to an additional IP rights grant found at http://aercloud.github.io/PATE
     <template is="dom-bind" id="demo">
       <label>Account:&nbsp;</label><input is="iron-input" bind-value="{{account}}" placeholder="Enter account id..."><p>
       <label>API Key:&nbsp;</label><input is="iron-input" bind-value="{{apiKey}}" placeholder="Enter api key..."><p>
-      <label>Container:&nbsp;</label><input is="iron-input" bind-value="{{container}}" placeholder="Enter container id..."><p>
-      <paper-button raised=true on-click="refreshFleet">Refresh Fleet</paper-button>
+      <paper-button raised=true on-click="refreshFleet">Refresh Element</paper-button>
       <hr>
       <div>
         <aae-fleet-admin account="{{account}}" api-key="{{apiKey}}" container="{{container}}"
