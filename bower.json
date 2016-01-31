@@ -23,8 +23,10 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
-    "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.2.0",
+    "iron-label": "PolymerElements/iron-label#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0",
     "paper-card": "PolymerElements/paper-card#^1.0.0",
     "aae-aercloud-behaviors": "https://github.com/aercloudappexpress/aae-aercloud-behaviors.git#master"
   },

@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://aercloud.github.io/PATE
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-styles/paper-styles.html"> 
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../aae-aercloud-behaviors/aae-aercloud-config-behavior.html">
 
@@ -25,12 +26,30 @@ Example:
 <dom-module id="aae-fleet-admin">
   <style>
     :host {
-
+      display: inline-block;
     }
     .container {
       @apply(--layout-horizontal);
       @apply(--layout-wrap);
     }
+    .summary {
+      margin: 5px;
+    }
+    .fleet-id {
+      margin-left: 5px;
+      @apply(--paper-font-title);
+    }
+    paper-card {
+      --paper-card-background-color: var(--paper-indigo-500);
+      color: white;
+      --paper-card-header-text: {
+        color: white;
+      };
+      --paper-card-content: {
+        @apply(--paper-font-display1);
+      }
+    }
+
   </style>
   <template>
     <iron-ajax id="fleetAjax"
@@ -69,35 +88,39 @@ Example:
       on-error="handlePlaceError"
       debounce-duration="300"></iron-ajax>      
 
-    <label>ID: [[_fleetSummary.id]]</label></p>
-    <label>Name: [[_fleetSummary.name]]</label></p>
+    <div>
+      <iron-label class="fleet-id">Fleet ID: [[_fleetSummary.id]]</iron-label>
+    </div>
+    <div>
+      <iron-label class="fleet-id">Name: [[_fleetSummary.name]]</iron-label>
+    </div>
 
     <div class="container">
-      <paper-card heading="Devices">
+      <paper-card heading="Devices" class="summary">
         <div class="card-content">[[_deviceSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Devices</paper-button>
         </div>
       </paper-card>
-      <paper-card heading="Vehicles">
+      <paper-card heading="Vehicles" class="summary">
         <div class="card-content">[[_vehicleSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Vehicles</paper-button>
         </div>
       </paper-card>
-      <paper-card heading="Drivers">
+      <paper-card heading="Drivers" class="summary">
         <div class="card-content">[[_driverSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Drivers</paper-button>
         </div>
       </paper-card>
-      <paper-card heading="Stations">
+      <paper-card heading="Stations" class="summary">
         <div class="card-content">[[_stationSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Stations</paper-button>
         </div>
       </paper-card>
-      <paper-card heading="Places">
+      <paper-card heading="Places" class="summary">
         <div class="card-content">[[_placeSummary.count]]</div>
         <div class="card-actions">
           <paper-button>Add Places</paper-button>
